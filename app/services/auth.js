@@ -1,7 +1,6 @@
 'use strict';
 
 let userService = require('./user');
-let appService = require('./app');
 let constants = require('../resources/constants');
 let enums = require('../resources/enums/core.enums');
 
@@ -40,25 +39,5 @@ exports.authenticate = (data = {}, is_admin = false, done) => {
 		// all is well, return successful user
 
 		return done(null, user);
-	});
-};
-
-exports.authApp = (data = {}, done) => {
-	// find a user whose email is the same as the forms email
-	// we are checking to see if the user trying to login already exists
-	appService.findByClientId(data.client_id, (err, app) => {
-		// if there are any errors, return the error before anything else
-		if (err) {
-			return done(err, false);
-		}
-
-		// if no user is found, return the message
-		if (!app) {
-			return done( new TypeError(constants.auth_failed), false);
-		}
-
-		// all is well, return successful user
-
-		return done(null, app);
 	});
 };
